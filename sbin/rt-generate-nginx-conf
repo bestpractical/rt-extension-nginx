@@ -1,0 +1,71 @@
+#!/usr/bin/env perl
+
+### after: use lib qw(@RT_LIB_PATH@);
+use lib qw(/opt/rt4/local/lib /opt/rt4/lib);
+
+use File::Spec;
+use File::Path qw(make_path);
+use autodie;
+
+use RT;
+RT::LoadConfig();
+
+die "Only empty WebPath is supported at the moment,"
+    ." eg serving RT from http://rt.$stash{domain}/,"
+    ." not http://$stash{domain}$stash{web_path}/"
+    if RT->Config->Get('WebPath');
+
+my %stash;
+
+$stash{'nginx_root'} = File::Spec->catdir($RT::VarPath, 'nginx');
+make_path( $stash{'nginx_root'} );
+
+$stash{'nginx_conf'} = File::Spec->catfile($stash{'nginx_root'}, 'nginx.conf'),
+
+$stash{'fcgi_storage'} = File::Spec->catfile($stash{'nginx_root'}, 'fcgi.storage'),
+make_path( $stash{'fcgi_storage'} );
+
+$stash{'fcgi_temp'} = File::Spec->catfile($stash{'nginx_root'}, 'fcgi.temp'),
+make_path( $stash{'fcgi_temp'} );
+
+foreach my $file (qw(nginx.conf rt.server.conf fcgi.include.conf)) {
+    main->GenerateFile( $file, \%stash );
+}
+
+sub GenerateFile {
+    my $self = shift;
+    my $name = shift;
+    my $stash = shift;
+
+    require RT::Plugin;
+    my $from = RT::Plugin->new( name => 'RT::Extension::Nginx' )->Path('etc');
+
+    return $self->ParseTemplate(
+        From  => [$from, $name],
+        To    => [$stash->{'nginx_root'}, $name],
+        Stash => $stash,
+    );
+}
+
+sub ParseTemplate {
+    my $self = shift;
+    my %args = @_;
+
+    $_ = File::Spec->catfile(@$_) foreach grep ref $_, $args{'From'}, $args{'To'};
+
+    use Text::Template;
+    my $template = Text::Template->new(
+        TYPE => 'FILE',
+        SOURCE => $args{'From'},
+        DELIMITERS => [qw(<% %>)],
+    );
+    my $res = $template->fill_in( HASH => { stash => $args{'Stash'} } );
+    return $res unless $args{'To'};
+
+    open my $fh, '>', $args{'To'};
+    print $fh $res;
+    close $fh;
+
+    return $res;
+}
+
