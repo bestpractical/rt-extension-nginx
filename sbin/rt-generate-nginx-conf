@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
 ### after: use lib qw(@RT_LIB_PATH@);
-use lib qw(/opt/rt4ngx/local/lib /opt/rt4ngx//lib);
+use lib qw(/opt/rt4/local/lib /opt/rt4/lib);
 
 use strict;
 use warnings;
