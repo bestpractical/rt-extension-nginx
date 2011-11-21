@@ -1,5 +1,5 @@
 ---
-abstract: 'build a '
+abstract: 'optimized request tracker within minutes'
 author:
   - 'Ruslan Zakirov <ruz@bestpractical.com>'
 build_requires:

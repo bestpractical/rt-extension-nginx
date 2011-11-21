@@ -12,9 +12,73 @@ use autodie;
 
 =head1 NAME
 
-RT::Extension::Nginx - build a 
+RT::Extension::Nginx - optimized request tracker within minutes
+
+=head1 SYNOPSIS
+
+    perl Makefile.PL
+    make
+    make install
+
+    cd /opt/rt4/local/plugins/RT-Extension-Nginx/
+    ./sbin/rt-generate-nginx-conf
+    ./sbin/rt-nginx-control start
 
 =head1 DESCRIPION
+
+B<This is beta> software. Lacks some documentation.
+
+Extension comes with two scripts:
+
+=over 4
+
+=item rt-generate-nginx-conf
+
+Generates optimized nginx config from RT configuration and templates. Creates
+required directories and files.
+
+=item rt-nginx-control
+
+Simple script that can start, stop and restart nginx and fcgi processes.
+
+=head1 FEATURES
+
+=head2 Fast web server in front
+
+Nginx is very fast web server with low memory footprint.
+
+=head2 Reverse proxy like setup
+
+Two servers schema with web server in front and FastCGI (FCGI)
+server running RT as backend. Nginx buffers replies from FCGI, so
+heavy FCGI processes get free and ready to serve next request
+before user gets the current request.
+
+=head2 Forking FCGI
+
+FCGI processes are forked so share some memory between processes
+lowering memory footprint.
+
+=head2 Serving images without FCGI
+
+Nginx serves /NoAuth/images/ location from files without touching
+FCGI and does it properly accounting local directory and plugins'
+directories.
+
+=head2 Semi-static serving of css and js
+
+Files served from /NoAuth/css/ and /NoAuth/js/ locations are stored
+on first request for re-use.
+
+=head2 Content gziping
+
+Html, css and js gzipped. For example size of the primary css file
+drops from 78k down to 19kb.
+
+=head2 TODO
+
+A few things can be improved within RT and this extension, but it's
+a good start.
 
 =cut
 
