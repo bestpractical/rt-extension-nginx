@@ -16,7 +16,10 @@ substitute( {
     'sbin/rt-nginx-control',
 );
 
+requires_rt '4.0';
+requires 'File::Spec';
+requires 'File::Path';
 requires 'autodie';
-requires 'Text::Template' => 1.20;
+requires 'Text::Template' => 1.22;
 
 WriteAll();

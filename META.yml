@@ -20,7 +20,9 @@ no_index:
     - html
     - inc
 requires:
-  Text::Template: 1.2
+  File::Path: 0
+  File::Spec: 0
+  Text::Template: 1.22
   autodie: 0
   perl: 5.8.3
 resources:
