@@ -13,8 +13,10 @@ substitute( {
         RT_LIB_PATH => join( ' ', $local_lib_path, $lib_path ),
     },
     'sbin/rt-generate-nginx-conf',
+    'sbin/rt-nginx-control',
 );
 
 requires 'autodie';
 requires 'Text::Template' => 1.20;
 
+WriteAll();

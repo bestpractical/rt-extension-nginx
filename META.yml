@@ -17,6 +17,7 @@ name: RT-Extension-Nginx
 no_index:
   directory:
     - etc
+    - html
     - inc
 requires:
   Text::Template: 1.2
