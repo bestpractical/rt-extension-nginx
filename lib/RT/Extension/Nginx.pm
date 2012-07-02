@@ -24,7 +24,7 @@ RT::Extension::Nginx - optimized request tracker within minutes
     ./sbin/rt-generate-nginx-conf
     ./sbin/rt-nginx-control start
 
-=head1 DESCRIPION
+=head1 DESCRIPTION
 
 B<This is beta> software. Lacks some documentation.
 
@@ -39,7 +39,10 @@ required directories and files.
 
 =item rt-nginx-control
 
-Simple script that can start, stop and restart nginx and fcgi processes.
+Simple script that can start, stop and restart nginx and fcgi processes. Run
+without arguments to see help.
+
+=back
 
 =head1 FEATURES
 

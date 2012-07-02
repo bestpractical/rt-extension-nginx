@@ -6,6 +6,41 @@ use lib qw(/opt/rt4/local/lib /opt/rt4/lib);
 use strict;
 use warnings;
 
+=head1 NAME
+
+rt-nginx-control - script to start, stop or restart nginx and/or fcgi running RT
+
+=head1 USAGE
+
+    rt-nginx-control start
+    rt-nginx-control stop
+    rt-nginx-control restart
+
+    rt-nginx-control start fcgi
+    rt-nginx-control stop fcgi
+    rt-nginx-control restart fcgi
+
+    rt-nginx-control start nginx
+    rt-nginx-control stop nginx
+    rt-nginx-control restart nginx
+
+=head1 DESCRIPTION
+
+This script allows you to control nginx and/or fcgi processes that run RT.
+You can control both if you run nothing but RT on the server or control
+only one part of the setup. For example if you run something else on
+nginx server then use the scrip to contol fcgi part only.
+
+The script expects that nginx and plackup commands are in your PATH.
+
+You can take a look at the source code of the script to get idea which
+commands are executed, where files are located. The script is very simple.
+
+B<NOTE>: one important thing this script does is that it runs servers under
+web user, not user you start it under (root).
+
+=cut
+
 use File::Spec;
 use autodie;
 
@@ -18,7 +53,9 @@ my %commands = map {$_ => 1} qw(start stop restart);
 my $command = pop @ARGV;
 my $target = pop @ARGV;
 if ( !$command || !$commands{ $command } || ($target && !$target) ) {
-    exit usage();
+    require Pod::Usage;
+    print Pod::Usage::pod2usage( { verbose => 2  }  );
+    exit 1;
 }
 
 my @plugins = RT->Config->Get('Plugins');

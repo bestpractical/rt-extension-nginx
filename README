@@ -10,7 +10,7 @@ SYNOPSIS
         ./sbin/rt-generate-nginx-conf
         ./sbin/rt-nginx-control start
 
-DESCRIPION
+DESCRIPTION
     This is beta software. Lacks some documentation.
 
     Extension comes with two scripts:
@@ -21,7 +21,7 @@ DESCRIPION
 
     rt-nginx-control
         Simple script that can start, stop and restart nginx and fcgi
-        processes.
+        processes. Run without arguments to see help.
 
 FEATURES
   Fast web server in front
@@ -59,11 +59,4 @@ AUTHOR
 
 LICENSE
     Under the same terms as perl itself.
-
-POD ERRORS
-    Hey! The above document had some coding errors, which are explained
-    below:
-
-    Around line 44:
-        You forgot a '=back' before '=head1'
 
