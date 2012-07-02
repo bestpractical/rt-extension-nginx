@@ -2,7 +2,7 @@ Makefile
 Makefile.bak
 Makefile.old
 Makefile.new
-MYMETA.yml
+MYMETA.*
 pm_to_blib
 blib/
 MANIFEST.bak
