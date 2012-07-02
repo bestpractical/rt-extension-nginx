@@ -3,12 +3,12 @@ abstract: 'optimized request tracker within minutes'
 author:
   - 'Ruslan Zakirov <ruz@bestpractical.com>'
 build_requires:
-  ExtUtils::MakeMaker: 6.57
+  ExtUtils::MakeMaker: 6.59
 configure_requires:
-  ExtUtils::MakeMaker: 6.57
+  ExtUtils::MakeMaker: 6.59
 distribution_type: module
 dynamic_config: 1
-generated_by: 'Module::Install version 1.04'
+generated_by: 'Module::Install version 1.06'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
