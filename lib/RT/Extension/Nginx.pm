@@ -4,7 +4,7 @@ use warnings;
 
 package RT::Extension::Nginx;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use File::Spec;
 use File::Path qw(make_path);
